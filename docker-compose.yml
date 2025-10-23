@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  pets:
+    image: pets:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    environment:
+      - NODE_ENV=production
+      - DB_FILE=/app/data/db.sqlite
+      - NEXTAUTH_URL=http://localhost:3000
+      - AUTH_TRUST_HOST=http://localhost:3000
+      - NEXTAUTH_SECRET=kjlkjflfddfjjhd
+    volumes:
+      - ./db.sqlite:/app/data/db.sqlite

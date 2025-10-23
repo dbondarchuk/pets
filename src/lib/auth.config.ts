@@ -13,23 +13,29 @@ const authConfig = {
         }
       },
       async authorize(credentials, req) {
-        const url = new URL(req.url);
-        // Dummy credentials verification endpoint
-        const response = await fetch(
-          `${url.protocol}//${url.host}/api/auth/verify`,
-          {
-            method: 'POST',
-            body: JSON.stringify(credentials)
+        try {
+          const url = new URL(req.url);
+          // Dummy credentials verification endpoint
+          const response = await fetch(
+            `${url.protocol}//${url.host}/api/auth/verify`,
+            {
+              method: 'POST',
+              body: JSON.stringify(credentials)
+            }
+          );
+          if (!response.ok) {
+            return null;
           }
-        );
-        if (!response.ok) {
+          const data = await response.json();
+          if (!data.user) {
+            return null;
+          }
+          return data.user;
+        } catch (error: any) {
+          // eslint-disable-next-line no-console
+          console.error('Error verifying credentials', error);
           return null;
         }
-        const data = await response.json();
-        if (!data.user) {
-          return null;
-        }
-        return data.user;
       }
     })
   ],

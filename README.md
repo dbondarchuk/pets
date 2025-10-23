@@ -80,6 +80,15 @@ This will:
 
 The application will start on http://localhost:3000 URL
 
+## Live Demo
+
+A live demo of the application is available at: **[https://pets.bondarchuk.me/](https://pets.bondarchuk.me/)**
+
+**Demo Credentials:**
+
+- **Admin access**: `admin@example.com` / `password`
+- **Regular users**: See the complete list in the [Auth section](#auth)
+
 ## Front-end
 
 The front-end application is written using Next.js for simplifying API+frontend flow. It uses collection of ShadcnUI components + custom components to achieve better user experience.

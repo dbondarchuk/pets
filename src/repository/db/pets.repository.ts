@@ -107,12 +107,14 @@ export class PetsRepository implements IPetsRepository {
 
   public async deletePets(ids: ID[], ownerId?: ID) {
     const db = await getPetsDb();
-    await db.destroy({
-      where: {
-        id: { [Op.in]: ids },
-        ownerId
-      }
-    });
+    const where: WhereOptions<PetRecord> = {};
+    if (ids.length > 0) {
+      where.id = { [Op.in]: ids };
+    }
+    if (ownerId) {
+      where.ownerId = ownerId;
+    }
+    await db.destroy({ where });
   }
 
   public async updatePet(id: ID, updateModel: PetUpdateModel) {

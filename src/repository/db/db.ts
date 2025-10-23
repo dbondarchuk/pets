@@ -218,27 +218,34 @@ PetRecord.init(
   { sequelize, tableName: 'Pets' }
 );
 
-VaccinationRecord.belongsTo(PetRecord, { foreignKey: 'petId', as: 'pet' });
-AllergyRecord.belongsTo(PetRecord, { foreignKey: 'petId', as: 'pet' });
-PetRecord.belongsTo(UserRecord, { foreignKey: 'ownerId', as: 'owner' });
 PetRecord.hasMany(VaccinationRecord, {
   foreignKey: 'petId',
   as: 'vaccinations',
   onDelete: 'CASCADE',
-  onUpdate: 'CASCADE'
+  onUpdate: 'CASCADE',
+  constraints: true,
+  hooks: true
 });
 PetRecord.hasMany(AllergyRecord, {
   foreignKey: 'petId',
   as: 'allergies',
   onDelete: 'CASCADE',
-  onUpdate: 'CASCADE'
+  onUpdate: 'CASCADE',
+  constraints: true,
+  hooks: true
 });
 UserRecord.hasMany(PetRecord, {
   foreignKey: 'ownerId',
   as: 'pets',
   onDelete: 'CASCADE',
-  onUpdate: 'CASCADE'
+  onUpdate: 'CASCADE',
+  constraints: true,
+  hooks: true
 });
+
+VaccinationRecord.belongsTo(PetRecord, { foreignKey: 'petId', as: 'pet' });
+AllergyRecord.belongsTo(PetRecord, { foreignKey: 'petId', as: 'pet' });
+PetRecord.belongsTo(UserRecord, { foreignKey: 'ownerId', as: 'owner' });
 
 let isSynced = false;
 const syncDb = async () => {
